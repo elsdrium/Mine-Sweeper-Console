@@ -20,7 +20,7 @@ private:
 	// column, row, bombs count, unopened lattices count
 	size_t col, row, bcount, ucount;
 
-	// •Œ vector< vector<T> > ®”™Ì•‹§G∫˚∞}¶C, •H´KØ‡∞ ∫A®M©w§j§p
+	// matrix stores map data
 	vector< vector<MType> > matrix;
 
 	inline void  PutBomb( size_t bcount );
