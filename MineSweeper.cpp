@@ -26,7 +26,7 @@ inline void MineSweeper::PutBomb( size_t bcount )
 		if( matrix[x][y] != Bomb ) {
 			matrix[x][y]  = Bomb;
 		}
-		else {   // ´O√“∑|¬\§W bcount ¡˚¨µºu™∫æ˜®Ó
+		else {   // it guarantees 'bcount' bombs would be set up
 			--i;
 			continue;
 		}
@@ -57,11 +57,11 @@ inline void MineSweeper::Open( int x, int y )
 	if( here == Bomb )
 		throw YouLose();
 
-	// ≤Œ≠p©P≥Ú§KÆÊ¶aπpº∆, ®√ß‚ ucount -1
+	// count bombs around, and let ucount -1
 	here = BombCountAround( x, y );
 	--ucount;
 
-	// if ©P≥Ú®S¶≥•Ù¶Û¶aπp, then ß‚©P≥Ú§KÆÊ•˛≥°Æi∂}
+	// if no bomb around, then spread here
 	if( !here )
 		Spread( x, y );
 }
@@ -101,10 +101,10 @@ inline void MineSweeper::Draw() const
 {
 	cout << "  ";
 	for( int i=0; i!=col; ++i )
-		cout << setw(2) << i+1;  // Æyº–º–•‹•—1∂}©l•H≤≈¶X®œ•Œ™Ã≤ﬂ∫D
+		cout << setw(2) << i+1;  // adapt index to start from 1 for user
 	cout << endl;
 
-	// row •˝¨O¨∞§F®œµe•X®”™∫πœ≤≈¶X®œ•Œ™Ã≤ﬂ∫D.
+	// row first
 	for( int j=0; j!=row; ++j ) {
 		cout << setw(2) << j+1 ;
 
@@ -112,16 +112,16 @@ inline void MineSweeper::Draw() const
 			switch( matrix[i][j] ) {
 				case Bomb:
 				case NoBomb:
-					cout << "¢i"; break;
-				case B0:  cout << "°@"; break;
-				case B1:  cout << "¢∞"; break;
-				case B2:  cout << "¢±"; break;
-				case B3:  cout << "¢≤"; break;
-				case B4:  cout << "¢≥"; break;
-				case B5:  cout << "¢¥"; break;
-				case B6:  cout << "¢µ"; break;
-				case B7:  cout << "¢∂"; break;
-				case B8:  cout << "¢∑"; break;
+					cout << "█"; break;
+				case B0:  cout << "　"; break;
+				case B1:  cout << "１"; break;
+				case B2:  cout << "２"; break;
+				case B3:  cout << "３"; break;
+				case B4:  cout << "４"; break;
+				case B5:  cout << "５"; break;
+				case B6:  cout << "６"; break;
+				case B7:  cout << "７"; break;
+				case B8:  cout << "８"; break;
 				default:  cout << "??";
 			}
 		}
@@ -134,7 +134,7 @@ inline void MineSweeper::Draw() const
 	cout << endl;
 }
 
-// ≥o∏Ã§£≥B≤z¶]®œ•Œ™ÃøÈ§J´Dº∆¶r¶r§∏≥y¶®™∫ error
+// No fool-proofing
 inline void MineSweeper::NewGame()
 {
 	int x, y;
@@ -148,7 +148,7 @@ inline void MineSweeper::NewGame()
 		cin >> x >> y;
 
 		try {
-			Open( x-1, y-1 ); // ®œ•Œ™ÃøÈ§J∑|•— (1,1) ~ (col,row), ¨G∂∑ -1 •H≤≈¶X∞}¶C¶s®˙≥W´h
+			Open( x-1, y-1 ); // from (1,1) to (col,row)
 			CheckWin();
 		}
 		catch( RangeError ) {
@@ -168,7 +168,7 @@ inline void MineSweeper::NewGame()
 	}
 }
 
-// ∞Ú©ÛπÔ®œ•Œ™Ãµ{´◊™∫´H•Ù°A¶b≥o∏Ã§]§£≥B≤z¶]®œ•Œ™ÃøÈ§J´D™k∏ÍÆ∆≥y¶®™∫ error -_-
+// No fool-proofing
 inline void MineSweeper::InputArgs()
 {
 	cout << "Please input the col. of the game." << endl;
